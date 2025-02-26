@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Laravel Application
+  app:
+    build:
+      context: ./laravel
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    volumes:
+      - ./laravel:/var/www/html
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+
+  # React Application
+  client:
+    build:
+      context: ./react-app
+      dockerfile: Dockerfile
+    container_name: react_app
+    volumes:
+      - ./react-app:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
